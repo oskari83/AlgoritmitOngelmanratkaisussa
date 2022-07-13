@@ -5,7 +5,7 @@
 #include <algorithm>
 using namespace std;
 typedef long long ll;
-
+ 
 int main() {
     int a;
     cin >> a;
@@ -26,7 +26,7 @@ int main() {
         }
         s.push(make_pair(b[i],i+1));
     }
-
+ 
     for(int i=0;i<a;i++){
         cout << ans[i] << " ";
     }
