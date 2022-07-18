@@ -4,9 +4,9 @@
 #include <algorithm>
 using namespace std;
 typedef long long ll;
-
+ 
 ll tree[400010];
-
+ 
 void change(int k, int x, int n) {
     k += n;
     tree[k] = x;
@@ -14,7 +14,7 @@ void change(int k, int x, int n) {
         tree[k] = min(tree[2*k], tree[2*k+1]);
     }
 }
-
+ 
 ll getMin(int a, int b,int n) {
     a += n; b += n;
     ll x = tree[a];
@@ -29,19 +29,19 @@ ll getMin(int a, int b,int n) {
     }
     return x;
 }
-
+ 
 int main() {
     ll n,q;
     cin >> n >> q;
-
+ 
     for(int i=n;i<2*n;i++){
         cin >> tree[i];
     }
-
+ 
     for(int i=n-1; i>0;i--){
         tree[i]=min(tree[2*i],tree[2*i+1]);
     }
-
+ 
     for(int i=0;i<q;i++){
         int type;
         ll a2, a3;
@@ -53,4 +53,5 @@ int main() {
             cout << sum << "\n";
         }
     }
+    
 }
