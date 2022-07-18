@@ -15,21 +15,6 @@ void change(int k, int x, int n) {
     }
 }
 
-ll getMin(int a, int b,int n) {
-    a += n; b += n;
-    ll x = tree[a];
-    while (a <= b) {
-        if (a%2 == 1){
-            x = max(x, tree[a++]);
-        }
-        if (b%2 == 0){ 
-            x = max(x, tree[b--]);
-        }
-        a /= 2; b /= 2;
-    }
-    return x;
-}
-
 int main() {
     ll n,m;
     cin >> n >> m;
@@ -49,7 +34,7 @@ int main() {
     for(int i=n-1; i>0;i--){
         tree[i]=max(tree[2*i],tree[2*i+1]);
     }
-    
+
     for(int j=0;j<m;j++){
         int y;
         cin >> y;
