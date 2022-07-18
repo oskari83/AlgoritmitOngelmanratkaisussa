@@ -1,5 +1,5 @@
 #include <iostream>
-#include <set>
+#include <map>
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -27,20 +27,14 @@ ll getSum(int a, int b,int n) {
 }
 
 int main() {
-    int n;
-    cin >> n;
-    vector<ll> pairs[n];
-    vector<ll> rights;
-    vector<ll> rights2;
+    int n,q;
+    cin >> n >> q;
+    vector<ll> pairs[q];
+    ll arr[n];
+    map <int,int> lastSeen;
 
     for(int i=0;i<n;i++){
-        ll left, right;
-        cin >> left >> right;
-        pairs[i].push_back(left);
-        pairs[i].push_back(right);
-        pairs[i].push_back(i);
-        rights.push_back(right);
-        rights2.push_back(-right);
+        cin >> arr[i];
         tree[i+n] = 0;
     }
 
@@ -48,45 +42,36 @@ int main() {
         tree[i] = tree[2*i] + tree[2*i+1];
     }
 
-    sort(pairs,pairs+n, [ ]( const auto& lhs, const auto& rhs )
-    {
-        if(lhs[0]==rhs[0])
-            return lhs[1] > rhs[1];
-        return lhs[0] < rhs[0];
-    });
+    cout << "\n";
 
-    sort(rights.begin(),rights.end());
-    sort(rights2.begin(),rights2.end());
-
-    ll answers[n];
-    ll answers2[n];
-
-    for(int i=0;i<n;i++){
-        auto it = lower_bound(rights.begin(),rights.end(),pairs[i][1]);
-        int index = it-rights.begin();
-        ll summa = getSum(index,n-1,n);
-        answers[pairs[i][2]]=summa;
-        change(index,tree[n+index]+1,n);
+    for(int i=0;i<q;i++){
+        int a,b;
+        cin >> a >> b;
+        pairs[i].push_back(a);
+        pairs[i].push_back(b);
+        pairs[i].push_back(i);
     }
 
-    for(int i=0;i<(2*n);i++){
-        tree[i] = 0;
-    }
+    sort(pairs,pairs+q);
+    int answers[q];
+
+    int j=q-1;
 
     for(int i=n-1;i>=0;i--){
-        auto it = lower_bound(rights2.begin(),rights2.end(),-pairs[i][1]);
-        int index = it-rights2.begin();
-        index = n-1-index;
-        ll summa = getSum(0,index,n);
-        answers2[pairs[i][2]]=summa;
-        change(index,tree[n+index]+1,n);
+        int cur = arr[i];
+        if(lastSeen.count(cur)){
+            change(lastSeen[cur],tree[lastSeen[cur]+n]-1,n);
+        }
+        lastSeen[cur]=i;
+        change(i,1,n);
+        while(j>-1 && pairs[j][0]-1==i){
+            int summa = getSum(i,pairs[j][1]-1,n);
+            answers[pairs[j][2]]=summa;
+            j--;
+        }
     }
-
-    for(int i=0;i<n;i++){
-        cout << answers2[i] << " ";
-    }
-    cout << "\n";
-    for(int i=0;i<n;i++){
-        cout << answers[i] << " ";
+    
+    for(int i=0;i<q;i++){
+        cout << answers[i] << "\n";
     }
 }
