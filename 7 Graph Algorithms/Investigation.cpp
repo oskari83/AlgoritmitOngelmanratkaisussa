@@ -43,8 +43,6 @@ int main() {
         if(dist!=distance[node][0])
             continue;
 
-        //cout << "current node=" << node << "\n";
-
         for(auto u : graph[node]){
             ll nwdist = distance[node][0] + u.second;
             ll oldDist = distance[u.first][0];
@@ -56,7 +54,6 @@ int main() {
                 vector<ll> tmp;
                 tmp.push_back(-nwdist); tmp.push_back(u.first);
                 q.push(tmp);
-                //cout << "newShorterTo=" << u.first << " stats[" << distance[u.first][0] << ","<< distance[u.first][1] << "," << distance[u.first][2] << "," << distance[u.first][3] << "]" << "\n";
             }else if(nwdist==oldDist){
                 distance[u.first][1]+=distance[node][1];
                 distance[u.first][1] = distance[u.first][1]%mod;
@@ -64,7 +61,6 @@ int main() {
                     distance[u.first][2]=distance[node][2]+1;
                 if(distance[node][3]+1>distance[u.first][3])
                     distance[u.first][3]=distance[node][3]+1;
-                //cout << "sameLenTo=" << u.first << " stats[" << distance[u.first][0] << ","<< distance[u.first][1] << "," << distance[u.first][2] << "," << distance[u.first][3] << "]" << "\n";
             }
         }
     }
