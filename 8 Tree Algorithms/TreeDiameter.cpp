@@ -5,17 +5,14 @@
 using namespace std;
 typedef long long ll;
 
-int visited[200005];
 vector<int> graph[200005];
 int maxLen=0;
 int maxLenNode;
 
-void dfs(int s, int len) {
-    if (visited[s]==1) 
-        return;
-    visited[s] = 1;
+void dfs(int s, int len, int prev) {
     for (auto u: graph[s]) {
-        dfs(u,len+1);     
+        if(u!=prev)
+            dfs(u,len+1,s);     
     }
     if(len>maxLen){
         maxLen=len;
@@ -33,11 +30,8 @@ int main() {
         graph[n1].push_back(n2);
         graph[n2].push_back(n1);
     }
-    dfs(1,0);
-    for(int i=1;i<n+1;i++){
-        visited[i]=0;
-    }
+    dfs(1,0,0);
     
-    dfs(maxLenNode,0);
+    dfs(maxLenNode,0,0);
     cout << maxLen << "\n";
 }
