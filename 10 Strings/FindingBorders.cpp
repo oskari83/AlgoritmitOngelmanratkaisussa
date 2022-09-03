@@ -20,20 +20,22 @@ vector<int> z(string s) {
 }
 
 int main(){
-    string st, pat;
-    cin >> st >> pat;
-    
-    int m = pat.length();
-    string nst = pat + "#" + st;
+    string st;
+    cin >> st;
+    int n = st.length();
+    vector<int> ztable = z(st);
 
-    vector<int> ztable = z(nst);
-
-    int ans = 0;
+    vector<int> ans;
+    int ind = 0;
     for(auto u : ztable){
-        if(u==m){
-            ans++;
+        if(u==(n-ind)){
+            ans.push_back(u);
         }
+        ind++;
     }
 
-    cout << ans;
+    int n2 = ans.size();
+    for(int i=n2-1;i>=0;i--){
+        cout << ans[i] << " ";
+    }
 }
